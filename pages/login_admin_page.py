@@ -7,3 +7,5 @@ class LoginAdminPage:
     SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
     OPENCART_LINK = (By.XPATH, "//*[text()='OpenCart']")
     FORGOTTEN_PASSWORD = (By.XPATH, "//*[text()=' No match for Username and/or Password. ']")
+    AUTH_LINK = (By.XPATH, '//span[contains(text(), "John Doe")]')
+    LOGOUT_LINK = (By.XPATH, '//span[contains(text(), "Logout")]')
