@@ -1,13 +1,12 @@
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from pages.login_admin_page import LoginAdminPage
+from page_objects.auth_admin_page import AuthAdmin
+from page_objects.login_admin import LoginAdmin
+
 
 
 def test_login_admin(browser):
-    browser.get(browser.base_url + "/administration")
-    wait = WebDriverWait(browser, 5)
-    wait.until(EC.visibility_of_element_located(LoginAdminPage.USERNAME_INPUT))
-    wait.until(EC.visibility_of_element_located(LoginAdminPage.PASSWORD_INPUT))
-    wait.until(EC.visibility_of_element_located(LoginAdminPage.OPENCART_LINK))
-    wait.until(EC.visibility_of_element_located(LoginAdminPage.SUBMIT_BUTTON)).click()
-    wait.until(EC.visibility_of_element_located(LoginAdminPage.FORGOTTEN_PASSWORD))
+    AuthAdmin(browser).admin_acc(browser)
+    LoginAdmin(browser).get_field_username_input
+    LoginAdmin(browser).get_field_password_input
+    LoginAdmin(browser).get_opencart_link
+    LoginAdmin(browser).click_submit_button()
+    LoginAdmin(browser).get_text_forgotten_password
