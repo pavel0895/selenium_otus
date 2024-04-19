@@ -1,13 +1,12 @@
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from pages.product_page import ProductPage
+from page_objects.auth_admin_page import AuthAdmin
+from page_objects.product_card import ProductCard
+
 
 
 def test_product_card(browser):
-    browser.get(browser.base_url)
-    wait = WebDriverWait(browser, 5)
-    wait.until(EC.visibility_of_element_located(ProductPage.TABLETS_LINK)).click()
-    wait.until(EC.visibility_of_element_located(ProductPage.TABLETS_CHECK)).click()
-    wait.until(EC.visibility_of_element_located(ProductPage.PRICE_CHECK))
-    wait.until(EC.visibility_of_element_located(ProductPage.QUANTITY_FIELD))
-    wait.until(EC.visibility_of_element_located(ProductPage.BUTTON_CART)).click()
+    AuthAdmin(browser).open(browser)
+    ProductCard(browser).get_tablets_link()
+    ProductCard(browser).get_tablets_check()
+    ProductCard(browser).get_price_check
+    ProductCard(browser).get_quantity_field
+    ProductCard(browser).click_button_cart()
