@@ -29,9 +29,9 @@ def analyze_logs(log_files):
 
     return {
         "total_requests": total_requests,
-        "methods": dict(methods),
+        "total_stat": dict(methods),
         "top_ips": dict(ip_addresses.most_common(3)),
-        "slow_requests": slow_requests
+        "top_longest": slow_requests
     }
 
 
@@ -56,10 +56,10 @@ def main():
 
     print("Результат сохранён в файл result.json")
     print("Всего выполненных запросов: ", result["total_requests"])
-    print("Количество запросов по методам: ", result["methods"])
+    print("Количество запросов по методам: ", result["total_stat"])
     print("Top-3 IP-адресов: ", result["top_ips"])
     print("Top-3 самых долгих запроса: ")
-    for i, request in enumerate(result["slow_requests"]):
+    for i, request in enumerate(result["top_longest"]):
         print(
             f"{i + 1}. Метод: {request['method']}, URL: {request['url']}, IP: {request['ip']}, Продолжительность: {request['duration']}, Дата и время: {request['date_time']}")
 
