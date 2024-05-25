@@ -10,20 +10,21 @@ def analyze_logs(log_files):
     ip_addresses = Counter()
     slow_requests = []
 
-    for log_file in log_files:
-        with open(log_file, 'r') as file:
-            for line in file:
-                parts = line.split()
-                total_requests += 1
-                methods[parts[5].split()[0].strip('"')] += 1
-                ip_addresses[parts[0]] += 1
-                slow_requests.append({
-                    "method": parts[5].split()[0].strip('"'),
-                    "url": parts[6],
-                    "ip": parts[0],
-                    "duration": int(parts[-1]),
-                    "date_time": parts[3].strip('[]')
-                })
+    with open(log_files, 'r') as file:
+        for line in file:
+            parts = line.split()
+            if len(parts) < 7:
+                continue
+            total_requests += 1
+            methods[parts[5].split()[0].strip('"')] += 1
+            ip_addresses[parts[0]] += 1
+            slow_requests.append({
+                "method": parts[5].split()[0].strip('"'),
+                "url": parts[6],
+                "ip": parts[0],
+                "duration": int(parts[-1]),
+                "date_time": parts[3].strip('[]')
+            })
 
     slow_requests = sorted(slow_requests, key=itemgetter("duration"), reverse=True)[:3]
 
@@ -49,12 +50,14 @@ def main():
         print("Путь не существует или указан неверно!")
         return
 
-    result = analyze_logs(log_files)
+    for log_file in log_files:
+        result = analyze_logs(log_file)
 
-    with open("result.json", 'w') as file:
-        json.dump(result, file, indent=4)
+        json_file = f"{log_file}.json"
+        with open(log_file, 'w') as file:
+            json.dump(result, file, indent=4)
 
-    print("Результат сохранён в файл result.json")
+    print(f"Результат анализа для {log_file} сохранён в файл {json_file}")
     print("Всего выполненных запросов: ", result["total_requests"])
     print("Количество запросов по методам: ", result["total_stat"])
     print("Top-3 IP-адресов: ", result["top_ips"])
