@@ -7,6 +7,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/pavel0895/selenium_otus/'
             }
         }
+        stage('Install System Dependencies') {
+            steps {
+                sh '''
+                    sudo apt-get update
+                    sudo apt-get install -y python3.11-venv
+                '''
+            }
+        }
         stage('Setup Python Environment') {
             steps {
                 sh '''
